@@ -45,6 +45,20 @@ async def handle_callback(request):
             data = await resp.json()
             if 'access_token' in data:
                 save_token(data)
-                return web.Response(text="Success! Token saved. You can close this window. restart the bot container to apply changes if it doesn't start automatically.")
+                html = """
+                <html>
+                <body style="font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0;">
+                    <div style="background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h1 style="color: #4CAF50;">Login Successful! ✅</h1>
+                        <p>The access token has been securely saved.</p>
+                        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+                        <p style="font-weight: bold;">Usage:</p>
+                        <p>The bot should start automatically within a few seconds.</p>
+                        <p style="color: #666; font-size: 0.9em;">If nothing happens, please restart the Docker container.</p>
+                    </div>
+                </body>
+                </html>
+                """
+                return web.Response(text=html, content_type='text/html')
             else:
                 return web.Response(text=f"Error getting token: {data}")
