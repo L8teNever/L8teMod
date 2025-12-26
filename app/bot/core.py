@@ -6,11 +6,22 @@ logger = logging.getLogger("BotCore")
 
 class Bot(commands.Bot):
     def __init__(self, token, client_id, client_secret, bot_id, channel_name):
+        self.target_channel = channel_name
         super().__init__(token=token, client_id=client_id, client_secret=client_secret, bot_id=bot_id, prefix='!', initial_channels=[channel_name])
 
     async def event_ready(self):
         # self.nick might not be available in newer twitchio versions immediately or requires different access
         logger.info(f'Logged in as | User ID: {self.user_id}')
+        
+        # Send startup message
+        # Wait a bit for the channel to be available in cache
+        import asyncio
+        await asyncio.sleep(2) 
+        channel = self.get_channel(self.target_channel)
+        if channel:
+            await channel.send("L8teBot ist gestartet! 🚀")
+        else:
+            logger.warning(f"Could not send startup message: Channel '{self.target_channel}' not found.")
     
     async def load_commands(self):
         # Dynamically load all modules in app/bot/commands
