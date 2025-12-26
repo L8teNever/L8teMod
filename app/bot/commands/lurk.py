@@ -31,7 +31,7 @@ class LurkCog(commands.Cog):
                     )
                 
                 ai_resp = await genai_client.aio.models.generate_content(
-                    model='gemini-1.5-flash',
+                    model='gemini-2.0-flash-exp',
                     contents=prompt
                 )
                 if ai_resp.text:
