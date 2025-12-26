@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   twitch_bot:
-    image: ghcr.io/l8tenever/l8temod:latest
-    container_name: twitch_lurk_bot
+    image: <DEIN_DOCKERHUB_USERNAME>/l8temod:latest
+    container_name: l8temod_bot
     restart: always
     volumes:
       - ./data:/app/data
     env_file:
       - .env
     ports:
-      - "5000:5000"
+      - "9999:5000"

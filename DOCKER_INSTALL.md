@@ -1,34 +1,31 @@
-# Installation via Docker (GHCR)
+# Installation via Dockge / Docker
 
-Dieses Repository ist mit GitHub Container Registry (GHCR) verknüpft. Das bedeutet, du kannst das Image direkt herunterladen, ohne es selbst bauen zu müssen.
+Dieses Repository ist so konfiguriert, dass Images auf Docker Hub gepusht werden.
 
-## Voraussetzung
+## Installation
 
-Du benötigst eine installierte Docker-Umgebung (Docker Desktop oder Docker Engine + Docker Compose).
+Nutze folgenden Code in **Dockge** oder einer `docker-compose.yml`:
 
-## Installation & Start
+```yaml
+version: '3.8'
 
-1. **Datei herunterladen**:
-   Lade die Datei `docker-compose.deploy.yml` herunter und benenne sie ggf. in `docker-compose.yml` um (oder nutze sie direkt wie unten beschrieben).
-   
-2. **Setup**:
-   Erstelle eine `.env` Datei im gleichen Verzeichnis mit deiner Konfiguration (siehe `.env.example`).
-   Stelle sicher, dass ein Ordner `./data` existiert oder von Docker erstellt werden kann.
-
-3. **Starten**:
-   Führe folgenden Befehl aus:
-
-   ```bash
-   docker-compose -f docker-compose.deploy.yml up -d
-   ```
-
-   Dies wird automatisch das neueste Image (`ghcr.io/l8tenever/l8temod:latest`) herunterladen und starten.
-
-## Manuelles Aktualisieren
-
-Um auf die neueste Version zu aktualisieren:
-
-```bash
-docker-compose -f docker-compose.deploy.yml pull
-docker-compose -f docker-compose.deploy.yml up -d
+services:
+  twitch_bot:
+    image: <DEIN_DOCKERHUB_USERNAME>/l8temod:latest
+    container_name: l8temod_bot
+    restart: always
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "9999:5000"
+    environment:
+      - TWITCH_CLIENT_ID=
+      - TWITCH_CLIENT_SECRET=
+      - GEMINI_API_KEY=
+      - BOT_NICK=L8teBot
+      - CHANNEL_NAME=
 ```
+
+1. Ersetze `<DEIN_DOCKERHUB_USERNAME>` mit deinem Docker Hub Benutzernamen.
+2. Trage deine Environment-Variablen ein.
+3. Der Service ist dann unter `http://<DEINE-IP>:9999` erreichbar.
