@@ -14,6 +14,11 @@ Siehe [DOCKER_INSTALL.md](DOCKER_INSTALL.md) für Details zur Installation ohne 
 
 Um den Bot lokal zu entwickeln oder selbst zu bauen, siehe [INSTRUCTIONS.txt](INSTRUCTIONS.txt).
 
+## Einrichtung & Keys
+
+Damit der Bot läuft, brauchst du API Keys von Twitch und Google.
+Eine genaue Anleitung findest du hier: **[SETUP_GUIDE.md](SETUP_GUIDE.md)**
+
 ## Features
 
 - Twitch Chat Integration
