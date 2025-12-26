@@ -1,0 +1,4 @@
+twitchio
+google-generativeai
+python-dotenv
+aiohttp
