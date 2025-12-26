@@ -11,7 +11,7 @@ load_dotenv()
 ENV_FILE = '.env'
 DATA_DIR = '/app/data'
 TOKEN_FILE = os.path.join(DATA_DIR, 'tokens.json')
-REDIRECT_URI = 'http://localhost:5000/callback'
+REDIRECT_URI = os.getenv('REDIRECT_URI', 'http://localhost:5000/callback')
 
 # Logging setup
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
