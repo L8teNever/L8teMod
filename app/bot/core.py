@@ -56,7 +56,7 @@ class Bot(commands.Bot):
             if filename.endswith('.py') and not filename.startswith('__'):
                 module_name = f'app.bot.commands.{filename[:-3]}'
                 try:
-                    await self.load_module(module_name)
+                    self.load_module(module_name)
                     logger.info(f"Loaded module: {module_name}")
                 except Exception as e:
                     logger.error(f"Failed to load module {module_name}: {e}")
