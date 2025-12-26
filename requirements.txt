@@ -1,4 +1,4 @@
-twitchio
-google-generativeai
+twitchio<3.0
+google-genai
 python-dotenv
 aiohttp

@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-import google.generativeai as genai
+from google import genai
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -65,11 +65,11 @@ BOT_NICK = os.getenv('BOT_NICK', 'LurkBot')
 CHANNEL_NAME = os.getenv('CHANNEL_NAME')
 
 # Gemini Setup
-model = None
+# Gemini Setup
+genai_client = None
 if GEMINI_KEY:
     try:
-        genai.configure(api_key=GEMINI_KEY)
-        model = genai.GenerativeModel('gemini-pro')
+        genai_client = genai.Client(api_key=GEMINI_KEY)
         logger.info("Gemini AI successfully configured.")
     except Exception as e:
          logger.error(f"Failed to configure Gemini: {e}")

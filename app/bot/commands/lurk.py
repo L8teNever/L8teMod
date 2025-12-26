@@ -1,5 +1,5 @@
 from twitchio.ext import commands
-from app.config import model, logger
+from app.config import genai_client, logger
 
 class LurkCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -12,7 +12,7 @@ class LurkCog(commands.Cog):
         
         response_text = f"{user} geht in den Lurk." # Fallback
 
-        if model:
+        if genai_client:
             try:
                 if reason:
                     prompt = (
@@ -27,7 +27,10 @@ class LurkCog(commands.Cog):
                         f"Erledige eine kurze, lustige, zufällige Ausrede auf Deutsch in der dritten Person, warum er lurkt."
                     )
                 
-                ai_resp = await model.generate_content_async(prompt)
+                ai_resp = await genai_client.aio.models.generate_content(
+                    model='gemini-1.5-flash',
+                    contents=prompt
+                )
                 if ai_resp.text:
                     response_text = ai_resp.text.strip()
             except Exception as e:
