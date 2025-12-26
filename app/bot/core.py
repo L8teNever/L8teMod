@@ -5,8 +5,8 @@ import os
 logger = logging.getLogger("BotCore")
 
 class Bot(commands.Bot):
-    def __init__(self, token, channel_name):
-        super().__init__(token=token, prefix='!', initial_channels=[channel_name])
+    def __init__(self, token, client_id, client_secret, channel_name):
+        super().__init__(token=token, client_id=client_id, client_secret=client_secret, prefix='!', initial_channels=[channel_name])
 
     async def event_ready(self):
         logger.info(f'Logged in as | {self.nick}')

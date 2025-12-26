@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from aiohttp import web
-from app.config import CHANNEL_NAME
+from app.config import CHANNEL_NAME, CLIENT_ID, CLIENT_SECRET
 from app.utils.token_manager import load_token
 from app.web.routes import routes
 from app.bot.core import Bot
@@ -29,7 +29,7 @@ async def main():
         token_data = load_token()
 
     logger.info("Token found, starting bot...")
-    bot = Bot(token=token_data['access_token'], channel_name=CHANNEL_NAME)
+    bot = Bot(token=token_data['access_token'], client_id=CLIENT_ID, client_secret=CLIENT_SECRET, channel_name=CHANNEL_NAME)
     
     # Load commands
     bot.load_commands()
