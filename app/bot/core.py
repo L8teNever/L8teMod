@@ -11,7 +11,7 @@ class Bot(commands.Bot):
 
     async def event_ready(self):
         # self.nick might not be available in newer twitchio versions immediately or requires different access
-        logger.info(f'Logged in as | User ID: {self.user_id}')
+        # logger.info(f'Logged in as | User ID: {self.user_id}')
         
         # Send startup message
         # Wait a bit for the channel to be available in cache
