@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import aiohttp
 from aiohttp import web
 from app.config import CHANNEL_NAME, CLIENT_ID, CLIENT_SECRET
 from app.utils.token_manager import load_token
@@ -28,8 +29,28 @@ async def main():
         await asyncio.sleep(5)
         token_data = load_token()
 
+    # Fetch Bot User ID (required for newer twitchio versions?)
+    bot_id = None
+    headers = {
+        'Client-Id': CLIENT_ID,
+        'Authorization': f'Bearer {token_data["access_token"]}'
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://api.twitch.tv/helix/users', headers=headers) as resp:
+            if resp.status == 200:
+                data = await resp.json()
+                if data['data']:
+                    bot_id = data['data'][0]['id']
+                    logger.info(f"Fetched Bot ID: {bot_id}")
+            else:
+                logger.error(f"Failed to fetch Bot ID: {await resp.text()}")
+
+    if not bot_id:
+        logger.error("Could not determine Bot ID. Exiting.")
+        return
+
     logger.info("Token found, starting bot...")
-    bot = Bot(token=token_data['access_token'], client_id=CLIENT_ID, client_secret=CLIENT_SECRET, channel_name=CHANNEL_NAME)
+    bot = Bot(token=token_data['access_token'], client_id=CLIENT_ID, client_secret=CLIENT_SECRET, bot_id=bot_id, channel_name=CHANNEL_NAME)
     
     # Load commands
     bot.load_commands()
