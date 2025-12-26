@@ -1,7 +1,7 @@
 from twitchio.ext import commands
 from app.config import model, logger
 
-class LurkCog(commands.Cog):
+class LurkCog:
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
