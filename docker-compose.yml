@@ -6,7 +6,8 @@ services:
     container_name: twitch_lurk_bot
     restart: always
     volumes:
-      - ./data:/app/data
+      - ./:/app
+
     env_file:
       - .env
     ports:

@@ -1,0 +1,12 @@
+
+# Wichtig:
+# 1. Bevor du docker-compose up machst, erstelle eine leere .env Datei,
+#    damit Docker keinen Ordner erstellt (falls sie noch nicht existiert).
+#    PowerShell: New-Item -ItemType File .env
+#
+# 2. Beim ersten Start kannst du das Setup interaktiv machen:
+#    docker-compose run --rm twitch_bot python main.py
+#    (Fülle die Daten aus, sie werden gespeichert)
+#
+# 3. Danach einfach normal starten:
+#    docker-compose up -d
