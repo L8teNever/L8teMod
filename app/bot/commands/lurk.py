@@ -6,25 +6,28 @@ class LurkCog(commands.Cog):
         self.bot = bot
 
     @commands.command(name='lurk')
-    async def cmd_lurk(self, ctx: commands.Context):
-        reason = ctx.message.content.replace('!lurk', '').strip()
+    async def cmd_lurk(self, ctx: commands.Context, *, reason: str = None):
         user = ctx.author.name
         
-        response_text = f"{user} geht in den Lurk." # Fallback
+        response_text = f"{user} verabschiedet sich in den Lurk." # Fallback
 
         if genai_client:
             try:
                 if reason:
+                    # Specific reason provided
                     prompt = (
-                        f"Ein Twitch-User namens '{user}' geht in den 'Lurk'-Modus (abwesend/zuschauen). "
+                        f"Der Twitch-User '{user}' geht in den 'Lurk'-Modus (abwesend). "
                         f"Er hat diesen Grund angegeben: '{reason}'. "
-                        f"Formuliere eine kurze, lustige oder passende Nachricht auf Deutsch in der dritten Person, "
-                        f"die bestätigt, dass er lurkt und warum. Behalte den Kern des Grundes bei."
+                        f"Schreibe einen kurzen Satz in der dritten Person auf Deutsch, der bestätigt, dass er lurkt "
+                        f"und diesen Grund nennt (z.B. '{user} geht in den Lurk, weil er essen muss'). "
+                        f"Sei locker und freundlich."
                     )
                 else:
+                    # No reason provided -> Random excuse
                     prompt = (
-                        f"Ein Twitch-User namens '{user}' geht in den 'Lurk'-Modus (abwesend). "
-                        f"Erledige eine kurze, lustige, zufällige Ausrede auf Deutsch in der dritten Person, warum er lurkt."
+                        f"Der Twitch-User '{user}' geht in den 'Lurk'-Modus (abwesend) ohne einen Grund zu nennen. "
+                        f"Erfinde eine lustige oder alltägliche Ausrede für ihn (z.B. Hausaufgaben machen, essen, Eltern helfen, Katze füttern). "
+                        f"Schreibe einen kurzen Satz in der dritten Person auf Deutsch (z.B. '{user} geht in den Lurk, um Hausaufgaben zu machen')."
                     )
                 
                 ai_resp = await genai_client.aio.models.generate_content(
