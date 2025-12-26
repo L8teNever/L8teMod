@@ -53,7 +53,7 @@ async def main():
     bot = Bot(token=token_data['access_token'], client_id=CLIENT_ID, client_secret=CLIENT_SECRET, bot_id=bot_id, channel_name=CHANNEL_NAME)
     
     # Load commands
-    bot.load_commands()
+    await bot.load_commands()
     
     await bot.start()
 
