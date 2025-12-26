@@ -35,5 +35,5 @@ class LurkCog(commands.Cog):
 
         await ctx.send(response_text)
 
-def setup(bot: commands.Bot):
+def prepare(bot: commands.Bot):
     bot.add_cog(LurkCog(bot))
