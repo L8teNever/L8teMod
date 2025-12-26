@@ -17,11 +17,17 @@ class Bot(commands.Bot):
         # Wait a bit for the channel to be available in cache
         import asyncio
         await asyncio.sleep(2) 
-        channel = self.get_channel(self.target_channel)
+        # In newer twitchio, get_channel might be missing. We check connected channels.
+        channel = None
+        for connected_channel in self.connected_channels:
+            if connected_channel.name.lower() == self.target_channel.lower():
+                channel = connected_channel
+                break
+        
         if channel:
             await channel.send("L8teBot ist gestartet! 🚀")
         else:
-            logger.warning(f"Could not send startup message: Channel '{self.target_channel}' not found.")
+            logger.warning(f"Could not send startup message: Channel '{self.target_channel}' not in connected_channels.")
     
     async def load_commands(self):
         # Dynamically load all modules in app/bot/commands
