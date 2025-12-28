@@ -71,6 +71,18 @@ if GEMINI_KEY:
     try:
         genai_client = genai.Client(api_key=GEMINI_KEY)
         logger.info("Gemini AI successfully configured.")
+        
+        # Debug: List available models to find valid names
+        try:
+            # Paging through models to find generateContent supported ones
+            logger.info("--- Available Gemini Models ---")
+            for m in genai_client.models.list():
+                if 'generateContent' in (m.supported_generation_methods or []):
+                    logger.info(f"Model: {m.name}")
+            logger.info("-------------------------------")
+        except Exception as e:
+            logger.warning(f"Could not list models: {e}")
+
     except Exception as e:
          logger.error(f"Failed to configure Gemini: {e}")
 else:
